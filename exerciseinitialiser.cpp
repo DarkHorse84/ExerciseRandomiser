@@ -1,7 +1,9 @@
 #include "exerciseinitialiser.h"
 #include <vector>
 #include <cstdlib>
+#include <iostream>
 #include <time.h>
+#include <QFile>
 
 using namespace std;
 
@@ -12,28 +14,20 @@ ExerciseInitialiser::ExerciseInitialiser(QObject *parent) : QObject(parent)
 
 void ExerciseInitialiser::initialise()
 {
-    /*Pushup, 50, 55
-     * Pullup, 10, 15
-     * Calf Raise, 50, 65
-     * Squat, 35, 40
-     * Curl, 10, 15
-     * Tricep Extension 30, 35
-     * Chin Up, 10, 15
-     * Palms in Dumbel Press, 20, 25
-     * */
     vector<ExerciseHolder*> vec = {};
     srand (time(NULL));
-    for(int i = 1; i <= 5;i++)
-    {
-        vec.push_back(new ExerciseHolder("Pushup", 50, 55));
-        vec.push_back(new ExerciseHolder("Dumbell Upright Row", 15, 20));
-        vec.push_back(new ExerciseHolder("Calf Raise", 50, 65));
-        vec.push_back(new ExerciseHolder("Squat", 35, 40));
-        vec.push_back(new ExerciseHolder("Curl", 10, 15));
-        vec.push_back(new ExerciseHolder("Tricep Extension", 30, 35));
-        vec.push_back(new ExerciseHolder("Chin Up", 10, 15));
-        vec.push_back(new ExerciseHolder("Palms in Dumbel Press", 20, 25));
-    }
+    //Read data from file format is <Name>,<min>,<Max>
+    QFile file("C:/ExerciseRandomiser/config.cfg");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return;
+    cout<<"file.atEnd():"<<file.atEnd()<<endl;
+    while (!file.atEnd()) {
+            QByteArray line = file.readLine();
+            process_line(line, vec);
+        }
+
+
+
     while(!vec.empty())
     {
         int index = rand() % (vec.size());
@@ -41,4 +35,18 @@ void ExerciseInitialiser::initialise()
         vec.erase(vec.begin()+index);
     }
     emit doneInitialise();
+}
+
+void ExerciseInitialiser::process_line(QByteArray line, vector<ExerciseHolder*>& exVector)
+{
+    QString tmpString(line);
+    cout<<"Processing "<<tmpString.toStdString()<<endl;
+    QStringList pieces = tmpString.split(",");
+    QString name = pieces[0];
+    int min = pieces[1].toInt();
+    int max = pieces[2].toInt();
+    for(int i = 0; i < 5; i++)
+    {
+        exVector.push_back(new ExerciseHolder(name.toStdString(), min, max));
+    }
 }
