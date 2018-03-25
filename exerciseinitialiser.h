@@ -15,6 +15,9 @@ signals:
     void doneInitialise();
 public slots:
     void initialise();
+
+private:
+    void process_line(QByteArray line, vector<ExerciseHolder*> &exVector);
 };
 
 #endif // EXERCISEINITIALISER_H
