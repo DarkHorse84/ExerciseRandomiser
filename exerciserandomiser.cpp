@@ -3,6 +3,7 @@
 #include "exerciseinitialiser.h"
 #include <iostream>
 #include <QShortcut>
+#include <QFont>
 
 using namespace std;
 
@@ -15,6 +16,10 @@ ExerciseRandomiser::ExerciseRandomiser(QWidget *parent) :
     ui->tableExerciseList->setRowCount(40);
     ui->tableExerciseList->setColumnCount(3);
 
+    QFont fnt;
+    fnt.setPointSize(20);
+    fnt.setFamily("Arial");
+    ui->taqbleCurrentExercise->setFont(fnt);
     ui->taqbleCurrentExercise->setRowCount(1);
     ui->taqbleCurrentExercise->setColumnCount(3);
     QStringList header;
