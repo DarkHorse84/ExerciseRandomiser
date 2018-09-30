@@ -13,7 +13,7 @@ ExerciseRandomiser::ExerciseRandomiser(QWidget *parent) :
 {
     ui->setupUi(this);
     ExerciseInitialiser* initer = new ExerciseInitialiser();
-    ui->tableExerciseList->setRowCount(40);
+    ui->tableExerciseList->setRowCount(45);
     ui->tableExerciseList->setColumnCount(3);
 
     QFont fnt;
