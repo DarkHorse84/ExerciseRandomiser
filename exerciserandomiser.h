@@ -21,6 +21,7 @@ private:
     int index=0;
     int labellingIndex=0;
     vector<ExerciseHolder*> exercises;
+    int totalExercises = 0;
 
 signals:
     void initialise();

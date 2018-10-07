@@ -63,11 +63,12 @@ void ExerciseRandomiser::receiveExercise(ExerciseHolder* exercise)
     ui->tableExerciseList->setItem(labellingIndex, 1, new QTableWidgetItem(QString::number(exercise->getReps())));
     ui->tableExerciseList->setItem(labellingIndex, 2, new QTableWidgetItem(QString::fromStdString(exercise->getName())));
     labellingIndex++;
+    totalExercises++;
 }
 
 void ExerciseRandomiser::next()
 {
-    if(index <= 39){
+    if(index <= totalExercises-1){
         ExerciseHolder* exercise = exercises.at(index);
         cout<<"Exercise #:"<<index<<" ExerciseName:"<<exercise->getName()<<" Reps:"<<exercise->getReps()<<endl;
         ui->taqbleCurrentExercise->setItem(0, 0, new QTableWidgetItem(QString::number(index+1)));
